@@ -1,0 +1,68 @@
+---
+title: 'BST 270: Individual Project'
+author: "Caitlin Cheung"
+date: "2025-01-21"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+This notebook is intended to fulfill the indiviudal project requirement for BST 270: Reproducible Data Science.
+
+## Motivation
+
+The goal of this project is to gauge the reproducibility of an article from FiveThirtyEight: [We Watched 906 Foul Balls To Find Out Where The Most Dangerous Ones Land](https://fivethirtyeight.com/features/we-watched-906-foul-balls-to-find-out-where-the-most-dangerous-ones-land/).
+
+This article explores the dangers of foul balls at MLB games, specifically focusing on which areas of stadiums are most hazardous for spectators. After watching 906 foul balls and analyzing data from the most foul-heavy games, the study found that while protective netting covers some areas, a significant number of high-velocity balls still land in unprotected zones, posing a serious risk. The research reveals that foul balls hit with high exit velocities, particularly line drives, are most likely to land in dangerous, unprotected areas. Despite improvements in netting, the article argues that additional safety measures are needed. The article concludes that, even with increased protection, there will always be inherent risks for fans attending baseball games.
+
+To assess the reproducibility of this article, I will be attempting to recreate one table and one figure. The table I selected highlighs descriptive statistics of the most foul-heavy day at 10 Baseball Stadiums. The figure I selected shows the counts of foul hits in each stadium zone.
+
+## Setup
+
+To set up, we first load the required packages. We utilize the **dplyr** package to manipulate and transform the data, the **gt** package to create and display customizable tables, and the **ggplot2** package to visualize data with customizable plots.
+
+Next, we load in the required dataset. To do so, we directly download and read in the CSV file from FiveThirtyEight's GitHub repository: [fivethirtyeight/data/foul-balls](https://github.com/fivethirtyeight/data/tree/master/foul-balls).
+
+```{r, message=FALSE, warning=FALSE}
+# install required packages
+library(dplyr)
+library(gt)
+library(ggplot2)
+
+# read data from GitHub and write to csv
+foul_balls_data <- read.csv("https://raw.githubusercontent.com/fivethirtyeight/data/refs/heads/master/foul-balls/foul-balls.csv")
+write.csv(foul_balls_data, file = "data/foul_balls.csv", quote = FALSE, row.names = FALSE)
+```
+
+## Reproducing Plots
+
+### Table 1: Descriptive Statistics of the Most Foul-Heavy Day at 10 Baseball Stadiums
+
+This table summarizes the most foul-heavy day at each of the 10 stadiums that produced the most fouls in the 2019 season (prior to June 5).
+
+```{r, message=FALSE}
+# Create a table for the most foul-heavy day at each of the 10 stadiums
+source("code/create_table1.R")
+table1 <- create_table1(foul_balls_data)
+table1
+```
+
+### Figure 1: Foul Hits per Stadium Zone, Colored by Velocity
+
+This figure shows a bar graph of the stadium zones where the foul balls landed and their corresponding velocities.
+
+```{r, warning=FALSE}
+source("code/create_figure1.R")
+figure1 <- create_figure1(foul_balls_data) 
+figure1
+```
+
+## Conclusion
+
+In all, I was able to accurately reproduce the tables/figures from the FiveThirtyEight article. Figure 1 was reproduced fairly easily by using the CSV file from GitHub. However, there were some issues when reproducing Table 1. The CSV file from GitHub was a filtered version of the full dataset, and therefore did not contain all the data necessary to complete Table 1. The CSV file contained only 7 variables (matchup, game_date, type_of_hit, exit_velocity, predicted_zone, camera_zone, used_zone). With these given variables, only the last 3 columns of Table 1 (DATE, MATCHUP, NO. OF FOULS) could be recreated. In order to get the STADIUM and AVERAGE NO. OF FOULS PER GAME columns, I had to seek outside data. Fortunately, both the GitHub and article pages had links to the raw data source: [Baseball Sevant](https://baseballsavant.mlb.com/statcast_search?hfPT=&hfAB=&hfBBT=&hfPR=foul%7C&hfZ=&stadium=&hfBBL=&hfNewZones=&hfGT=R%7C&hfC=&hfSea=2019%7C&hfSit=&player_type=pitcher&hfOuts=&opponent=&pitcher_throws=&batter_stands=&hfSA=&game_date_gt=&game_date_lt=2019-06-05&hfInfield=&team=&position=&hfOutfield=&hfRO=&home_road=&hfFlag=&hfPull=&metric_1=&hfInn=&min_pitches=0&min_results=0&group_by=venue&sort_col=pitches&player_event_sort=h_launch_speed&sort_order=desc&min_pas=0#results). From the Baseball Sevant website, I had to individually download a CSV file for each of the 10 stadiums, and label them accordingly. I also had to create a CSV file with a key linking stadium and team names. Since the stadium names from Baseball Sevant reflect the current names (from 2025) rather than the names from when the article was published (2019), there were several discrepancies in which I had to consult Google. In the end, while I was able to accurately recreate Table 1, there was a lot of work involved in this; it would've been much easier if the creators included the full data set, or at least all variables, within the GitHub CSV file.
+
+In conclusion, my experience with reproducibility in this project highlighted both the ease and challenges of replicating research outputs. While I was able to successfully reproduce the figures and tables, the process highlighted the importance of thorough and complete datasets. When faced with missing or incomplete information, I had to engage in additional research and data wrangling, which added considerable time and complexity to the task. This process emphasized the significance of clear documentation and well-organized data to facilitate easier replication. Ultimately, the experience strengthened my understanding of the intricacies of reproducible research and the value of accessible, well-structured datasets for ensuring seamless replication.
