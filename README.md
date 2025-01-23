@@ -30,32 +30,19 @@ install.packages(c("dplyr", "gt", "ggplot2"))
 
 ```
 
-## Project Structure 
+├── README.md # Project documentation ├── data/ # Input datasets │ ├── foul_balls.csv # Foul ball dataset from FiveThirtyEight │ ├── stadium_team_key.csv # Dataset linking stadium to team │ ├── table1_original.png # Original table from FiveThirtyEight │ ├── figure1_original.png # Original figure from FiveThirtyEight │ └── full_data_by_stadium/ # Stadium full datasets from Baseball Savant │ ├── Camden_Yards.csv
+│ ├── Citizens_Bank_Park.csv │ ├── Dodger_Stadium.csv
+│ ├── Globe_Life_Park.csv
+│ ├── Miller_Park.csv
+│ ├── Oakland_Coliseum.csv
+│ ├── PNC_Park.csv
+│ ├── SunTrust_Park.csv
+│ ├── T-Mobile_Park.csv
+│ └── Yankee_Stadium.csv
+├── code/ # R scripts for analysis │ ├── create_table1.R # Script to reproduce Table 1 │ └── create_figure1.R # Script to recreate Figure 1 ├── foul_balls_reproduction.Rmd # RMarkdown file for complete reproduction └── foul_balls_reproduction.html # HTML (knit) file for complete reproduction
 
-The repository is organized as follows: 
-├── README.md             			# Project documentation
-├── data/                 			# Input datasets
-│   ├── foul_balls.csv    			# Foul ball dataset from FiveThirtyEight
-│   ├── stadium_team_key.csv    	# Dataset linking stadium to team
-│   ├── table1_original.png 	    	# Original table from FiveThirtyEight
-│   ├── figure1_original.png 		# Original figure from FiveThirtyEight
-│   └── full_data_by_stadium/   	# Stadium full datasets from Baseball Savant 
-│	 	 ├── Camden_Yards.csv 	
-│	 	 ├── Citizens_Bank_Park.csv 
-│	 	 ├── Dodger_Stadium.csv 
-│	 	 ├── Globe_Life_Park.csv 
-│	 	 ├── Miller_Park.csv 
-│	 	 ├── Oakland_Coliseum.csv
-│	 	 ├── PNC_Park.csv 
-│	 	 ├── SunTrust_Park.csv 
-│	 	 ├── T-Mobile_Park.csv 
-│	 	 └── Yankee_Stadium.csv 
-├── code/                 			# R scripts for analysis
-│   ├── create_table1.R  			# Script to reproduce Table 1
-│   └── create_figure1.R     		# Script to recreate Figure 1
-├── foul_balls_reproduction.Rmd     # Rmarkdown file for complete reproduction
-└── foul_balls_reproduction.html		# HTML (knit) file for complete reproduction
-
+Copy
+Edit
 ## Getting Started 
 
 1. Clone the GitHub repository. 
